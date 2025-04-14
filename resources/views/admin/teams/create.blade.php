@@ -17,17 +17,41 @@
             </select>
         </div>
         <div class="mb-3">
-            <label for="image" class="form-label">Obárzek týmu</label>
-            <input type="file" class="form-control" id="image" name="image" accept="image/png, image/jpg, image/jpeg">
+            <label for="image" class="form-label">Obrázek týmu</label>
+            <input type="file" class="form-control" id="image" name="image" accept="image/png, image/jpg, image/jpeg" onchange="previewImage()">
             @if ($errors->has('image'))
                 <div class="text-danger">{{ $errors->first('image') }}</div>
             @endif
         </div>
 
-        <button type="submit" class="btn btn-success submit-once">Vytvořit</button>
-        <a href="{{ route('admin.teams.index') }}" class="btn btn-secondary">Zpět</a>
+        <div id="imagePreviewContainer" class="mb-3" style="display: none;">
+            <label for="imagePreview">Náhled obrázku:</label>
+            <br>
+            <img id="imagePreview" src="" alt="Náhled obrázku" class="img-fluid mt-2">
+        </div>
+
+        <button type="submit" class="btn btn-success submit-once mb-4">Vytvořit</button>
+        <a href="{{ route('admin.teams.index') }}" class="btn btn-secondary mb-4">Zpět</a>
     </form>
+
     <script>
+        function previewImage() {
+            const file = document.getElementById('image').files[0];
+            const previewContainer = document.getElementById('imagePreviewContainer');
+            const previewImage = document.getElementById('imagePreview');
+
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    previewImage.src = e.target.result;
+                    previewContainer.style.display = 'block';
+                };
+                reader.readAsDataURL(file);
+            } else {
+                previewContainer.style.display = 'none';
+            }
+        }
+
         document.addEventListener('DOMContentLoaded', function () {
             const forms = document.querySelectorAll('form');
 
@@ -43,4 +67,11 @@
             });
         });
     </script>
+
+    <style>
+        #imagePreview {
+            max-width: 300px;
+            height: auto;
+        }
+    </style>
 @endsection

@@ -56,7 +56,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
             return redirect()->route('admin.dashboard');
         });
     });
-    
+
     Route::middleware([CheckUserRole::class . ':editor,admin'])->group(function () {
         Route::get('/admin/dashboard', [DashboardController::class, 'adminDashboard'])->name('admin.dashboard');
 

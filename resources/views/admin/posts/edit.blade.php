@@ -72,7 +72,7 @@
             <div id="image-change-text" class="mt-3 text-success" style="display:none;">
                 <p><strong>Obrázek bude změněn!</strong></p>
             </div>
-            <div id="image-preview" class="mt-3">
+            <div id="image-preview" class="mt-3 mb-4">
 
             </div>
         </div>

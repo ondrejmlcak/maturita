@@ -11,8 +11,7 @@ class UtkaniController extends Controller
 
     public function index(Request $request)
     {
-        $query = Utkani::whereDate('start_time', Carbon::today())
-            ->orderBy('start_time', 'asc');
+        $query = Utkani::orderBy('start_time', 'desc');
 
         if ($request->has('search')) {
             $search = $request->input('search');

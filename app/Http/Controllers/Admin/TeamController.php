@@ -36,9 +36,9 @@ class TeamController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'name' => 'required|string|max:255',
+            'name' => 'required|string|max:20|unique:teams,name',
             'league_id' => 'required|exists:leagues,id',
-            'image' => 'nullable|image|max:2048',
+            'image' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
         ]);
 
         $imagePath = null;
@@ -79,9 +79,9 @@ class TeamController extends Controller
     public function update(Request $request, Team $team)
     {
         $request->validate([
-            'name' => 'required|string|max:255',
+            'name' => 'required|string|max:20|unique:teams,name',
             'league_id' => 'required|exists:leagues,id',
-            'image' => 'nullable|image|max:2048',
+            'image' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
         ]);
 
         $imagePath = $team->image;

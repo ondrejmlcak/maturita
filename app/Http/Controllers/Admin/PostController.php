@@ -39,7 +39,7 @@ class PostController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'title' => 'required|string|max:255',
+            'title' => 'required|string|max:255|unique:posts,title',
             'lead_paragraph' => 'nullable|string|max:500',
             'description' => 'required|string',
             'image' => 'nullable|image|max:2048',
@@ -95,7 +95,7 @@ class PostController extends Controller
         $post = Post::findOrFail($id);
 
         $request->validate([
-            'title' => 'required|string|max:255',
+            'title' => 'required|string|max:255|unique:posts,title',
             'lead_paragraph' => 'nullable|string|max:500',
             'description' => 'required|string',
             'image' => 'nullable|image|max:2048',

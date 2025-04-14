@@ -54,6 +54,16 @@
 <div class="container mt-5 pt-5 pl-5 pr-5">
     @yield('content')
 </div>
-
+<footer class="bg-dark text-white text-center py-4 mt-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="bg-dark py-3">
+                    <p class="mb-0">© 2025 TipAndGo - Všechna práva vyhrazena</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
 </body>
 </html>
