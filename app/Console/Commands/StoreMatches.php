@@ -23,22 +23,28 @@ class StoreMatches extends Command
         $matches = $this->oddsService->getAllMatches();
 
         foreach ($matches as $match) {
-            $existingMatch = Utkani::where('match_id', $match['id'])->first();
+            $duplicate = Utkani::where('home_team', $match['home_team'])
+                ->where('away_team', $match['away_team'])
+                ->where('start_time', $match['start_time'])
+                ->first();
 
-            if (!$existingMatch || $existingMatch->status !== 'Ended') {
-                Utkani::updateOrCreate(
-                    ['match_id' => $match['id']],
-                    [
-                        'home_team' => $match['home_team'],
-                        'away_team' => $match['away_team'],
-                        'score' => $match['score'],
-                        'status' => $match['status'],
-                        'league' => $match['league'],
-                        'start_time' => $match['start_time'],
-                        'minutes' => $match['minutes'],
-                    ]
-                );
+            if ($duplicate) {
+                $this->line("Zápas {$match['home_team']} vs {$match['away_team']} již existuje ve stejný čas.");
+                continue;
             }
+
+            Utkani::updateOrCreate(
+                ['match_id' => $match['id']],
+                [
+                    'home_team' => $match['home_team'],
+                    'away_team' => $match['away_team'],
+                    'score' => $match['score'],
+                    'status' => $match['status'],
+                    'league' => $match['league'],
+                    'start_time' => $match['start_time'],
+                    'minutes' => $match['minutes'],
+                ]
+            );
         }
 
         $this->info('Zápasy byly uloženy nebo aktualizovány!');

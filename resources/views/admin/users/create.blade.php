@@ -25,11 +25,6 @@
                 <input type="email" name="email" id="email" class="form-control" value="{{ old('email') }}" required>
             </div>
 
-            <div class="form-group mb-3">
-                <label for="money">Peníze</label>
-                <input type="number" name="money" id="money" class="form-control" min="0" step="0.01" value="{{ old('money') }}" pattern="\d*(\.\d{0,2})?" title="Zadejte číslo s maximálně dvěma desetinnými místy">
-            </div>
-
             <div class="mb-3">
                 <label for="usertype" class="form-label">Role</label>
                 <select name="usertype" id="role" class="form-select" required>

@@ -59,8 +59,14 @@ class ZapasController extends Controller
         return redirect()->route('admin.matches.index')->with('success', 'Zápas byl vytvořen.');
     }
 
-    public function edit(Zapas $match)
+    public function edit( $id)
     {
+
+        $match = Zapas::find($id);
+
+        if (!$match) {
+            return redirect()->route('admin.matches.index')->with('error', 'Zápas nebyl nalezen.');
+        }
         $teams = Team::all();
         $comments = $match->comments()->with('user')->orderBy('created_at', 'desc')->get();
         $events = $match->timeline()->get();
@@ -206,7 +212,6 @@ class ZapasController extends Controller
         return back()->with('success', 'Komentář byl úspěšně aktualizován.');
     }
 
-
     public function deleteComment($matchId, $commentId)
     {
         $comment = Comment::where('zapas_id', $matchId)->findOrFail($commentId);
@@ -215,34 +220,45 @@ class ZapasController extends Controller
         return redirect()->route('admin.matches.edit', $matchId)->with('success', 'Komentář byl úspěšně smazán.');
     }
 
-
-
-
     public function index()
     {
-        $matches = Zapas::whereNull('commentator_id')->get();
+        $matches = Zapas::whereNull('commentator_id')
+            ->orderBy('match_date', 'asc')
+            ->get();
+
         $noMatchesAvailable = $matches->isEmpty();
         return view('admin.matches.index', compact('matches', 'noMatchesAvailable'));
     }
 
     public function available()
     {
-        $matches = Zapas::whereNull('commentator_id')->get();
+        $matches = Zapas::whereNull('commentator_id')
+            ->orderBy('match_date', 'asc')
+            ->get();
+
         $noMatchesAvailable = $matches->isEmpty();
         return view('admin.matches.available', compact('matches', 'noMatchesAvailable'));
     }
 
     public function my()
     {
-        $claimedMatches = Zapas::where('commentator_id', auth()->id())->get();
+        $claimedMatches = Zapas::where('commentator_id', auth()->id())
+            ->orderBy('match_date', 'asc')
+            ->get();
+
         return view('admin.matches.my', compact('claimedMatches'));
     }
 
     public function claimed()
     {
+        $today = Carbon::today();
+
         $allClaimedMatches = Zapas::whereNotNull('commentator_id')
+            ->whereDate('match_date', '>=', $today)
             ->with('commentator')
+            ->orderBy('match_date', 'asc')
             ->get();
+
         return view('admin.matches.claimed', compact('allClaimedMatches'));
     }
 

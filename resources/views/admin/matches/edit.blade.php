@@ -35,10 +35,10 @@
                     </div>
 
                     <div class="form-group mt-4 mb-4">
-                        <button id="insertLineup" class="btn btn-secondary">Sestava</button>
-                        <button id="insertStats" class="btn btn-secondary">Statistiky</button>
-                        <button id="insertStartMatch" class="btn btn-secondary">Začátek utkání</button>
-                        <button id="insertEndMatch" class="btn btn-secondary">Konec utkání</button>
+                        <button id="insertLineup" type="button" class="btn btn-secondary">Sestava</button>
+                        <button id="insertStats" type="button" class="btn btn-secondary">Statistiky</button>
+                        <button id="insertStartMatch" type="button" class="btn btn-secondary">Začátek utkání</button>
+                        <button id="insertEndMatch" type="button" class="btn btn-secondary">Konec utkání</button>
                     </div>
 
                     <button type="submit" class="btn btn-primary mb-4 submit-once">Přidat komentář</button>
@@ -48,9 +48,9 @@
                 @foreach ($comments->sortByDesc('created_at') as $comment)
                     <div class="comment-item mb-3">
                         @if($comment->minute > 0)
-                            <p>{{ $comment->minute }}' {{ $comment->description }}</p>
+                            <p style="white-space: pre-wrap;"> {{ $comment->minute }}' {{ $comment->description }}</p>
                         @else
-                            <p>{{ $comment->description }}</p>
+                            <p style="white-space: pre-wrap;">{{ $comment->description }}</p>
                         @endif
 
                         <form action="{{ route('admin.matches.updateComment', ['match' => $match->id, 'comment' => $comment->id]) }}" method="POST">
@@ -188,7 +188,7 @@ Rozhodčí: ${referee}`;
                         <label for="referee">Rozhodčí</label>
                         <input type="text" name="referee" id="referee" value="{{ old('referee', $match->referee) }}" class="form-control">
                     </div>
-                    <button type="submit" class="btn btn-primary submit-once">Uložit</button>
+                    <button type="submit" class="btn btn-primary submit-once mb-4">Uložit</button>
                 </form>
 
             </div>

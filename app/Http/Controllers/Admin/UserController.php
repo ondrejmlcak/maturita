@@ -21,10 +21,17 @@ class UserController extends Controller
     /**
      * Zobrazí formulář pro úpravu uživatele.
      */
-    public function edit(User $user)
+    public function edit(string $id)
     {
+        $user = User::find($id);
+
+        if (!$user) {
+            return redirect()->route('admin.users.index')->with('error', 'Uživatel nebyl nalezen.');
+        }
+
         return view('admin.users.edit', compact('user'));
     }
+
 
     /**
      * Aktualizuje informace o uživatelském účtu.
@@ -83,14 +90,12 @@ class UserController extends Controller
             'email' => 'required|string|email|max:255|unique:users,email',
             'usertype' => 'required|in:admin,editor,user',
             'password' => 'required|string|confirmed|min:8',
-            'money' => 'nullable|numeric',
         ]);
 
         User::create([
             'name' => $validated['name'],
             'email' => $validated['email'],
             'usertype' => $validated['usertype'],
-            'money' => $validated['money'],
             'password' => bcrypt($validated['password']),
         ]);
 

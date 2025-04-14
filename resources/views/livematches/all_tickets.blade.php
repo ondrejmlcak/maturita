@@ -4,7 +4,7 @@
     <h2>Všechny tikety</h2>
 
     @if ($tickets->isEmpty())
-        <p>Nemáte žádné tikety.</p>
+        <p>Zatím jste nevytvořil žádný tiket.</p>
     @else
         @foreach ($tickets as $ticket)
             <div class="card mb-3">
@@ -29,19 +29,29 @@
                     </div>
                 </div>
                 <div class="card-body">
+                    @php
+                        $totalOdd = $ticket->bets->reduce(function ($carry, $bet) {
+                            return $carry * $bet->odd;
+                        }, 1);
+                    @endphp
+
+                    <div class="mb-2">
+                        <strong>Celkový kurz:</strong> {{ number_format($totalOdd, 2) }}
+                    </div>
                     <div class="mb-3">
                         <strong>Možná výhra:</strong> {{ number_format($ticket->final_win, 2) }}
                     </div>
+
                     <ul class="list-group">
                         @foreach ($ticket->bets as $bet)
                             <li class="list-group-item">
                                 <div class="d-flex justify-content-between align-items-center">
                                     <div>
                                         {{ $bet->match->home_team ?? 'Neznámý tým' }} -
-                                        {{ $bet->match->away_team ?? 'Neznámý tým' }} ⇒ {{\Carbon\Carbon::parse($bet->match->start_time)->format('d.m.Y H:i')}}
+                                        {{ $bet->match->away_team ?? 'Neznámý tým' }} ⇒ {{ \Carbon\Carbon::parse($bet->match->start_time)->format('d.m.Y H:i') }}
                                         <br>
                                         <small class="text-muted">
-                                            {{ $bet->bet_type }} - {{ $bet->odd }} <!-- - {{ $bet->match->minutes }}-->
+                                            {{ $bet->bet_type }} - {{ $bet->odd }}
                                         </small>
                                     </div>
                                     <div class="text-right">
@@ -64,7 +74,6 @@
                                     </div>
                                 </div>
                             </li>
-
                         @endforeach
                     </ul>
                 </div>

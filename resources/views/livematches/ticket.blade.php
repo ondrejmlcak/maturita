@@ -81,7 +81,7 @@
                 <button type="submit" class="btn btn-success submit-once">Podat tiket</button>
             </form>
         @else
-            <p>Váš tiket je prázdný.</p>
+            <p>Na tiketu se momentálně nic nenachází...</p>
         @endif
     </div>
 

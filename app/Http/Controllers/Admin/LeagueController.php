@@ -34,10 +34,17 @@ class LeagueController extends Controller
         return view('admin.leagues.show', compact('league'));
     }
 
-    public function edit(League $league)
+    public function edit($id)
     {
+        $league = League::find($id);
+
+        if (!$league) {
+            return redirect()->route('admin.leagues.index')->with('error', 'Liga nebyla nalezena.');
+        }
+
         return view('admin.leagues.edit', compact('league'));
     }
+
 
     public function update(Request $request, League $league)
     {

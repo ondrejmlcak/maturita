@@ -197,16 +197,6 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link {{ Route::is('admin.leagues.index') || Route::is('admin.leagues.create') || Route::is('admin.leagues.edit') ? 'active' : '' }}" href="{{ route('admin.leagues.index') }}">
-                                Ligy
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link {{ Route::is('admin.teams.index') || Route::is('admin.teams.create') || Route::is('admin.teams.edit') ? 'active' : '' }}" href="{{ route('admin.teams.index') }}">
-                                Týmy
-                            </a>
-                        </li>
-                        <li class="nav-item">
                             <a class="nav-link {{ Route::is('admin.matches.index') || Route::is('admin.matches.create') || Route::is('admin.matches.edit') || Route::is('admin.matches.lineup') ? 'active' : '' }}" href="{{ route('admin.matches.index') }}">
                                 Komentování zápasů
                             </a>

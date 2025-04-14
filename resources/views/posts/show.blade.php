@@ -20,9 +20,10 @@
 
     <h1>{{ $post->title }}</h1>
     <p>
-        Vytvořeno dne {{ \Carbon\Carbon::parse($post->created_at)->format('d. m. Y') }}
-        Autor: {{ $post->author->name }}
+        Vytvořeno dne {{ \Carbon\Carbon::parse($post->created_at)->format('d. m. Y') }},
+        Autor: <a href="{{ route('posts.byAuthor', ['id' => $post->user_id]) }}">{{ $post->author->name }}</a>
     </p>
+
 
     @if($post->image)
         <img src="{{ asset('storage/' . $post->image) }}" alt="{{ $post->title }}" class="img-fluid post-image">

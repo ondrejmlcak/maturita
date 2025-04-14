@@ -38,16 +38,33 @@ class FootballOddsService
 
             $now = Carbon::now('UTC')->timestamp;
 
-            return array_filter(array_map(function ($match, $id) use ($now) {
+            $seen = [];
+            $matches = [];
+
+            foreach ($data as $id => $match) {
                 $matchStart = $match['startTime'] ?? null;
 
                 if (!$matchStart || $matchStart < $now) {
-                    return null;
+                    continue;
                 }
 
                 $startTime = Carbon::createFromTimestampUTC($matchStart)->setTimezone('Europe/Prague');
+                $date = $startTime->toDateString();
 
-                return [
+                $home = strtolower(trim($match['home'] ?? ''));
+                $away = strtolower(trim($match['away'] ?? ''));
+
+                $teams = [$home, $away];
+                sort($teams);
+                $key = implode('|', $teams) . '|' . $date;
+
+                if (in_array($key, $seen)) {
+                    continue;
+                }
+
+                $seen[] = $key;
+
+                $matches[] = [
                     'id' => $id,
                     'home_team' => $match['home'] ?? 'Neznámý tým',
                     'away_team' => $match['away'] ?? 'Neznámý tým',
@@ -59,8 +76,9 @@ class FootballOddsService
                     'start_time' => $startTime->toDateTimeString(),
                     'minutes' => $match['minutes'] ?? 0,
                 ];
-            }, $data, array_keys($data)));
+            }
 
+            return $matches;
         } catch (RequestException $e) {
             return [];
         }
@@ -81,12 +99,34 @@ class FootballOddsService
                 return [];
             }
 
-            return array_map(function ($match, $id) {
-                $startTime = isset($match['startTime'])
-                    ? Carbon::createFromTimestampUTC($match['startTime'])->setTimezone('Europe/Prague')->toDateTimeString()
-                    : null;
+            $seen = [];
+            $matches = [];
 
-                return [
+            foreach ($data as $id => $match) {
+                $matchStart = $match['startTime'] ?? null;
+
+                if (!$matchStart) {
+                    continue;
+                }
+
+                $startTimeCarbon = Carbon::createFromTimestampUTC($matchStart)->setTimezone('Europe/Prague');
+                $startTime = $startTimeCarbon->toDateTimeString();
+                $date = $startTimeCarbon->toDateString();
+
+                $home = strtolower(trim($match['home'] ?? ''));
+                $away = strtolower(trim($match['away'] ?? ''));
+
+                $teams = [$home, $away];
+                sort($teams);
+                $key = implode('|', $teams) . '|' . $date;
+
+                if (in_array($key, $seen)) {
+                    continue;
+                }
+
+                $seen[] = $key;
+
+                $matches[] = [
                     'id' => $id,
                     'home_team' => $match['home'] ?? 'Neznámý tým',
                     'away_team' => $match['away'] ?? 'Neznámý tým',
@@ -98,11 +138,14 @@ class FootballOddsService
                     'start_time' => $startTime,
                     'minutes' => $match['minutes'] ?? 0,
                 ];
-            }, $data, array_keys($data));
+            }
+
+            return $matches;
         } catch (RequestException $e) {
             return [];
         }
     }
+
 
     public function getMatchOdds($id)
     {
@@ -180,6 +223,10 @@ class FootballOddsService
             $filteredOdds = array_filter($data['odds'], function ($key) use ($allowedBetTypes) {
                 return in_array($key, $allowedBetTypes);
             }, ARRAY_FILTER_USE_KEY);
+
+            if (isset($data['startTime']) && Carbon::createFromTimestampUTC($data['startTime'])->isPast()) {
+                $filteredOdds = [];
+            }
 
             $startTime = isset($data['startTime'])
                 ? Carbon::createFromTimestampUTC($data['startTime'])->setTimezone('Europe/Prague')->format('d.m.Y H:i')

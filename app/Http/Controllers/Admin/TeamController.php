@@ -59,12 +59,19 @@ class TeamController extends Controller
     /**
      * Zobrazení formuláře pro úpravu týmu.
      */
-    public function edit(Team $team)
+    public function edit(string $id)
     {
+        $team = Team::find($id);
+
+        if (!$team) {
+            return redirect()->route('admin.teams.index')->with('error', 'Tým nebyl nalezen.');
+        }
+
         $leagues = League::all();
 
         return view('admin.teams.edit', compact('team', 'leagues'));
     }
+
 
     /**
      * Aktualizace existujícího týmu.

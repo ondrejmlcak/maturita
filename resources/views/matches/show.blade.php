@@ -56,10 +56,10 @@
                     <a class="nav-link" id="lineups-tab" onclick="showTab('lineups')">👥 Sestavy</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" id="info-tab" onclick="showTab('info')">⚽ Informace</a>
+                    <a class="nav-link" id="timeline-tab" onclick="showTab('timeline')">⏱️ Časová osa</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" id="timeline-tab" onclick="showTab('timeline')">⏱️ Časová osa</a>
+                    <a class="nav-link" id="info-tab" onclick="showTab('info')">⚽ Informace</a>
                 </li>
             </ul>
             <div class="tab-content mt-3">
@@ -73,7 +73,7 @@
                             </div>
                             @endif
                             <div class="comment-text">
-                                <p>{{ $comment->description }}</p>
+                                <p style="white-space: pre-wrap;">{{ $comment->description }}</p>
                             </div>
                         </div>
                     @endforeach
@@ -81,13 +81,12 @@
                 <div id="lineups" class="tab-pane fade">
                     <div class="lineups-container d-flex justify-content-between">
                         <div class="lineup home-lineup">
-                            <h4>Sestava domácích</h4>
                             <ul>
                                 @foreach ($homeLineup as $player)
                                     <li>{{ $player }}</li>
                                 @endforeach
                             </ul>
-                            <h5>Náhradníci:</h5>
+                            <h5>Náhradníci</h5>
                             <ul>
                                 @foreach ($homeSubstitutes as $substitute)
                                     <li>{{ $substitute }}</li>
@@ -95,13 +94,12 @@
                             </ul>
                         </div>
                         <div class="lineup away-lineup">
-                            <h4>Sestava hostů</h4>
                             <ul>
                                 @foreach ($awayLineup as $player)
                                     <li>{{ $player }}</li>
                                 @endforeach
                             </ul>
-                            <h5>Náhradníci:</h5>
+                            <h5>Náhradníci</h5>
                             <ul>
                                 @foreach ($awaySubstitutes as $substitute)
                                     <li>{{ $substitute }}</li>
@@ -109,11 +107,6 @@
                             </ul>
                         </div>
                     </div>
-                </div>
-                <div id="info" class="tab-pane fade">
-                    <p><strong>Rozhodčí:</strong> {{ $match->referee }}</p>
-                    <p><strong>Stadion:</strong> {{ $match->stadium }}</p>
-                    <p><strong>Počet fanoušků:</strong> {{ $match->fans_count }}</p>
                 </div>
                 <div id="timeline" class="tab-pane fade">
                     <h3>Časová osa</h3>
@@ -157,6 +150,11 @@
                             @endforeach
                         </div>
                     </div>
+                </div>
+                <div id="info" class="tab-pane fade">
+                    <p><strong>Rozhodčí:</strong> {{ $match->referee }}</p>
+                    <p><strong>Stadion:</strong> {{ $match->stadium }}</p>
+                    <p><strong>Počet fanoušků:</strong> {{ $match->fans_count }}</p>
                 </div>
             </div>
         </div>

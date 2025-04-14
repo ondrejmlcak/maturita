@@ -74,12 +74,18 @@ class PostController extends Controller
      */
     public function edit(string $id)
     {
-        $post = Post::findOrFail($id);
+        $post = Post::find($id);
+
+        if (!$post) {
+            return redirect()->route('admin.posts.index')->with('error', 'Článek nebyl nalezen.');
+        }
+
         $leagues = League::all();
         $teams = Team::all();
 
         return view('admin.posts.edit', compact('post', 'leagues', 'teams'));
     }
+
 
     /**
      * Aktualizace existujícího příspěvku.

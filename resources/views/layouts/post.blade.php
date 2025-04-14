@@ -10,6 +10,8 @@
             {{ $league->name }} - TipAndGo
         @elseif(Route::currentRouteName() == 'posts.showByTeam' && isset($team) && !empty($team->name))
             {{ $team->name }} - {{ $league->name }} - TipAndGo
+        @elseif(Route::currentRouteName() == 'posts.byAuthor' && isset($author) && !empty($author->name))
+            {{ $author->name }} - TipAndGo
         @elseif(isset($post) && !empty($post->title))
             {{ $post->title }} - TipAndGo
         @elseif(request('query'))

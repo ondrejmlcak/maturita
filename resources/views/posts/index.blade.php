@@ -15,6 +15,11 @@
             <h2>Výsledky vyhledávání pro: "{{ request('query') }}"</h2>
         </div>
     @endif
+    @if(isset($author))
+        <h2>Články od autora: {{ $author->name }}</h2>
+    @endif
+
+
 
     <ul class="list-unstyled">
         @foreach ($posts as $post)

@@ -124,7 +124,7 @@
 
         .lineup h4 {
             font-size: 1.2rem;
-            margin-bottom: 10px;
+            margin-bottom: 5px;
         }
 
         .lineup ul {
@@ -135,7 +135,8 @@
 
         .lineup li {
             padding: 5px 0;
-            font-weight: bold;
+            font-weight: normal;
+            font-size: 20px;
         }
 
         .timeline-container {

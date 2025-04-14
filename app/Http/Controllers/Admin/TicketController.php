@@ -34,7 +34,11 @@ class TicketController extends Controller
      */
     public function edit($id)
     {
-        $ticket = Ticket::with('bets.match')->findOrFail($id);
+        $ticket = Ticket::with('bets.match')->find($id);
+
+        if (!$ticket) {
+            return redirect()->route('admin.tickets.index')->with('error', 'Tiket nebyl nalezen.');
+        }
 
         $match = $ticket->bets->first()->match ?? null;
 
@@ -58,6 +62,7 @@ class TicketController extends Controller
 
         return view('admin.tickets.edit', compact('ticket', 'matchInfo'));
     }
+
     /**
      * Uložení nového tiketu.
      */

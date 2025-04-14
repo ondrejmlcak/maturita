@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Post;
 use App\Models\League;
 use App\Models\Team;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class PostPageController extends Controller
@@ -33,7 +34,6 @@ class PostPageController extends Controller
 
         return view('posts.index', compact('posts', 'league', 'leagues'));
     }
-
 
     public function showByTeam($leagueSlug, $teamSlug)
     {
@@ -79,6 +79,25 @@ class PostPageController extends Controller
 
         return view('posts.index', compact('posts', 'leagues'));
     }
+
+    public function showByAuthor($id)
+    {
+
+        $author = User::find($id);
+
+        if (!$author) {
+            return redirect()->route('posts.index');
+        }
+
+        $posts = Post::where('user_id', $id)
+            ->orderBy('created_at', 'desc')
+            ->get();
+
+        $leagues = League::all();
+
+        return view('posts.index', compact('posts', 'author', 'leagues'));
+    }
+
 
 
     public function show($slug)
