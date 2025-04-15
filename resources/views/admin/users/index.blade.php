@@ -2,10 +2,10 @@
 
 @section('content')
     <a href="{{ route('admin.users.create') }}" class="btn btn-primary submit-once">Vytvoř uživatele</a>
+    <div class="table-responsive">
     <table class="table mt-3">
             <thead>
             <tr>
-                <th scope="col">ID</th>
                 <th scope="col">Jméno</th>
                 <th scope="col">Email</th>
                 <th scope="col">Peníze</th>
@@ -16,7 +16,6 @@
             <tbody>
             @foreach($users as $user)
                 <tr>
-                    <td>{{ $user->id }}</td>
                     <td>{{ $user->name }}</td>
                     <td>{{ $user->email }}</td>
                     <td>{{ $user->money }}</td>

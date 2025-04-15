@@ -10,6 +10,7 @@
         </div>
     </form>
 
+    <div class="table-responsive">
     <table class="table">
         <thead>
         <tr>
@@ -48,6 +49,7 @@
         @endforeach
         </tbody>
     </table>
+    </div>
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             const forms = document.querySelectorAll('form');

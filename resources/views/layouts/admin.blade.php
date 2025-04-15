@@ -113,6 +113,57 @@
             max-height: 200px;
             overflow-y: auto;
         }
+
+        .dashboard-card {
+            transition: box-shadow 0.3s ease;
+            border-radius: 1rem;
+            background-color: white;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+        }
+
+        .dashboard-card:hover {
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+        }
+
+        .dashboard-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #1F2937;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+            padding-left: 10px;
+            padding-top: 5px;
+        }
+
+        .dashboard-link {
+            color: #2563eb;
+            font-weight: 500;
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .dashboard-link:hover {
+            text-decoration: underline;
+            color: #1d4ed8;
+        }
+
+        .dashboard-date {
+            font-size: 0.875rem;
+            color: #6b7280;
+        }
+
+        .dashboard-list-item {
+            padding: 0.75rem 0;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .dashboard-empty {
+            color: #9ca3af;
+            padding: 0.75rem 0;
+        }
+
     </style>
 </head>
 <body>
@@ -232,10 +283,6 @@
                 </ul>
             </div>
         </nav>
-
-
-
-
         <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
             <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
                 <h1 class="h2">
@@ -300,7 +347,6 @@
                     @endif
                 </h1>
             </div>
-
             @include('components.flash-messages')
             @yield('content')
         </main>

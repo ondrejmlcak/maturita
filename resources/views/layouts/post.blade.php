@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>
         @if(Route::currentRouteName() == 'posts.index')
-            TipAndGo
+            Články - TipAndGo
         @elseif(Route::currentRouteName() == 'posts.showByLeague' && isset($league) && !empty($league->name))
             {{ $league->name }} - TipAndGo
         @elseif(Route::currentRouteName() == 'posts.showByTeam' && isset($team) && !empty($team->name))
@@ -17,7 +17,7 @@
         @elseif(request('query'))
             Výsledky vyhledávání pro: "{{ request('query') }}" - TipAndGo
         @else
-            TipAndGo
+            Články - TipAndGo
         @endif
     </title>
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
@@ -45,7 +45,6 @@
             width: 100% !important;
             max-width: 100% !important;
         }
-
 
         .post-card {
             display: flex;
@@ -78,7 +77,7 @@
             .post-card {
                 flex-direction: column;
                 font-size: 0.85rem;
-                padding: 10px;
+                padding: 5px;
             }
 
             .post-card-image {
@@ -91,6 +90,9 @@
             .post-text {
                 font-size: 0.85rem;
                 max-width: 100%;
+            }
+            .post-card h2 a {
+                font-size: 23px;
             }
         }
 
@@ -106,10 +108,33 @@
         .post-card p {
             color: #555;
         }
+        .post-content p {
+            font-size: 20px;
+            line-height: 1.6;
+        }
+
+         .top-header {
+             background-color: white;
+             border-bottom: 1px solid #ddd;
+             position: fixed;
+             top: 0;
+             width: 100%;
+             z-index: 1030;
+         }
+
+        .top-header h1 {
+            font-size: 2rem;
+            font-weight: bold;
+            margin: 0;
+        }
 
         .navbar-custom {
             background-color: #f8f9fa;
             border-bottom: 1px solid #ddd;
+            position: fixed;
+            top: 50px;
+            width: 100%;
+            z-index: 1020;
         }
 
         .navbar-custom .navbar-nav {
@@ -126,31 +151,64 @@
             width: 100%;
         }
 
-
-        .search-result-header {
-            margin-top: 20px;
+        .container-main {
+            padding-top: 140px;
         }
+        #scrollToTopBtn {
+            display: none;
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            z-index: 1040;
+            font-size: 18px;
+            border: none;
+            outline: none;
+            background-color: #007bff;
+            color: white;
+            cursor: pointer;
+            padding: 12px 16px;
+            border-radius: 50%;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: opacity 0.3s ease-in-out;
+        }
+
+        #scrollToTopBtn:hover {
+            background-color: #0056b3;
+        }
+
     </style>
 </head>
 <body>
-<nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top w-100">
-    <div class="container d-flex justify-content-between">
-        <a class="navbar-brand" href="{{ route('dashboard') }}">TipAndGo</a>
 
-        <form class="form-inline my-2 my-lg-0" method="GET" action="{{ route('posts.search') . '/'}}">
-            <input class="form-control search-bar mr-3" type="search" maxlength="20" placeholder="Hledat články..." aria-label="Search" name="query" value="{{ request('query') }}" required>
+<header class="top-header py-2 shadow-sm">
+    <div class="container d-flex justify-content-between align-items-center">
+        <a href="{{ route('dashboard') . '/' }}" class="text-dark text-decoration-none">
+            Dashboard
+        </a>
+        <a href="{{ route('posts.index') . '/' }}" class="text-dark text-decoration-none">
+            <h1 class="mb-0">TipAndGo</h1>
+        </a>
+        <div style="width: 80px;"></div>
+    </div>
+</header>
+
+
+
+<nav class="navbar navbar-expand-lg navbar-light navbar-custom">
+    <div class="container d-flex justify-content-between">
+        <form class="form-inline my-2 my-lg-0" method="GET" action="{{ route('posts.search') . '/' }}">
+            <input class="form-control search-bar mr-3" type="search" minlength="2" maxlength="20" placeholder="Hledat články..." aria-label="Search" name="query" value="{{ request('query') }}" required>
         </form>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
 
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ml-auto d-flex align-items-center">
-                <li class="nav-item mr-3">
-                    <a class="nav-link" href="{{ route('posts.index') . '/'}}">Všechny ligy</a>
-                </li>
                 @foreach($leagues as $league)
-                    <li class="nav-item mr-3">
+                    <li class="nav-item mr-1">
                         <a class="nav-link" href="{{ route('posts.showByLeague', $league->slug) . '/' }}">{{ $league->name }}</a>
                     </li>
                 @endforeach
@@ -160,11 +218,12 @@
 </nav>
 
 
-<div class="container mt-5 pt-5 pl-5 pr-5">
-        <div class="content-area pl-5 pr-5">
+<div class="container container-main pl-5 pr-5">
+    <div class="content-area pl-5 pr-5">
         @yield('content')
     </div>
 </div>
+
 <footer class="bg-dark text-white text-center py-4 mt-5">
     <div class="container">
         <div class="row">
@@ -176,8 +235,27 @@
         </div>
     </div>
 </footer>
+<button id="scrollToTopBtn" class="btn btn-primary" title="Zpět nahoru">
+    <i class="fas fa-arrow-up"></i>
+</button>
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script>
+    const scrollToTopBtn = document.getElementById("scrollToTopBtn");
+
+    window.onscroll = function () {
+        if (document.body.scrollTop > 300 || document.documentElement.scrollTop > 300) {
+            scrollToTopBtn.style.display = "block";
+        } else {
+            scrollToTopBtn.style.display = "none";
+        }
+    };
+
+    scrollToTopBtn.addEventListener("click", function () {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+</script>
+
 </body>
 </html>

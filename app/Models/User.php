@@ -54,4 +54,10 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         return $this->bets()->where('match_id', $matchId)->exists();
     }
+
+    public function tickets()
+    {
+        return $this->hasMany(Ticket::class);
+    }
+
 }

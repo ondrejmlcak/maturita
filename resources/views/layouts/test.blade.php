@@ -69,7 +69,10 @@
 
 <main class="container py-5">
     <h2 class="mb-4">Vítej, {{ auth()->user()->name ?? 'Guest' }}!</h2>
-    <p>Zde se dostaneš poté, co se přihlásíš, nebo zaregistruješ.</p>
+    @if (auth()->user()->usertype === 'admin' || auth()->user()->usertype === 'editor')
+        <p>Na admin dashboard se dostanete kliknutím na jméno, tam se nachází položka 'Admin dashboard'.</p>
+    @endif
+    @yield('content')
 </main>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 </body>

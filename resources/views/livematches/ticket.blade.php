@@ -72,7 +72,7 @@
                 @csrf
                 <div class="form-group">
                     <label for="amount">Sázka</label>
-                    <input type="number" name="amount" id="amount" class="form-control" min="5" required oninput="calculateWin()">
+                    <input type="number" name="amount" id="amount" class="form-control" min="5" max="10000000" required oninput="calculateWin()">
                 </div>
 
                 <p><strong>Celkový kurz:</strong> {{ number_format($totalOdd, 2) }}</p>
@@ -87,24 +87,33 @@
 
     <script>
         function calculateWin() {
-            let stake = document.getElementById('amount').value;
+            let stakeInput = document.getElementById('amount');
+            let stake = parseFloat(stakeInput.value);
             let totalOdd = {{ $totalOdd }};
+
+            if (isNaN(stake) || stake < 1) {
+                document.getElementById('potentialWin').textContent = 'Nelze vypočítat';
+                return;
+            }
+
             let potentialWin = (stake * totalOdd).toFixed(2);
             document.getElementById('potentialWin').textContent = potentialWin;
         }
-            document.addEventListener('DOMContentLoaded', function () {
+
+        document.addEventListener('DOMContentLoaded', function () {
             const forms = document.querySelectorAll('form');
 
             forms.forEach(form => {
-            form.addEventListener('submit', function () {
-            const submitButton = form.querySelector('button.submit-once');
+                form.addEventListener('submit', function () {
+                    const submitButton = form.querySelector('button.submit-once');
 
-            if (submitButton) {
-            submitButton.disabled = true;
-            submitButton.innerText = 'Probíhá...';
-        }
-        });
-        });
+                    if (submitButton) {
+                        submitButton.disabled = true;
+                        submitButton.innerText = 'Probíhá...';
+                    }
+                });
+            });
         });
     </script>
+
 @endsection

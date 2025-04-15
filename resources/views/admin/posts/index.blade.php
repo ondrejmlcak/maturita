@@ -2,11 +2,11 @@
 
 @section('content')
     <a href="{{ route('admin.posts.create') }}" class="btn btn-primary submit-once">Vytvořit příspěvek</a>
+    <div class="table-responsive">
     <table class="table mt-3">
         <thead>
         <tr>
             <th>Název</th>
-            <th>Slug</th>
             <th>Exkluziv.</th>
             <th>Datum vytvoř.</th>
             <th>Autor</th>
@@ -17,7 +17,6 @@
         @foreach ($posts as $post)
             <tr>
                 <td>{{ Str::limit($post->title, 30) }}</td>
-                <td>{{ Str::limit($post->slug, 30) }}</td>
                 <td>{{ $post->exkluzivni }}</td>
                 <td>{{ $post->created_at->format('d.m.Y. H:i') }}</td>
                 <td>{{ $post->author->name }}</td>
@@ -34,6 +33,7 @@
         @endforeach
         </tbody>
     </table>
+    </div>
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             const forms = document.querySelectorAll('form');

@@ -3,6 +3,7 @@
 @section('content')
     <a href="{{ route('admin.teams.create') }}" class="btn btn-primary submit-once">Vytvořit tým</a>
 
+    <div class="table-responsive">
     <table class="table mt-3">
         <thead>
         <tr>
@@ -32,6 +33,7 @@
         @endforeach
         </tbody>
     </table>
+    </div>
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             const forms = document.querySelectorAll('form');

@@ -36,10 +36,7 @@
                     @endphp
 
                     <div class="mb-2">
-                        <strong>Celkový kurz:</strong> {{ number_format($totalOdd, 2) }}
-                    </div>
-                    <div class="mb-3">
-                        <strong>Možná výhra:</strong> {{ number_format($ticket->final_win, 2) }}
+                        <strong>Celkový kurz:</strong> {{ number_format($totalOdd, 2) }}, <strong>Možná výhra:</strong> {{ number_format($ticket->final_win, 2) }}
                     </div>
 
                     <ul class="list-group">

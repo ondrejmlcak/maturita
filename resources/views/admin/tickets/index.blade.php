@@ -2,6 +2,7 @@
 
 @section('content')
 
+    <div class="table-responsive">
     <table class="table mt-3">
         <thead>
         <tr>
@@ -36,6 +37,7 @@
         @endforeach
         </tbody>
     </table>
+    </div>
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             const forms = document.querySelectorAll('form');

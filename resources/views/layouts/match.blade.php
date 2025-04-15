@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>
-        Textové přenosy
+        Textové přenosy - TipAndGo
     </title>
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
@@ -60,20 +60,6 @@
 
         .match-card p {
             color: #555;
-        }
-
-        .navbar-custom {
-            background-color: #f8f9fa;
-            border-bottom: 1px solid #ddd;
-        }
-
-        .navbar-custom .navbar-nav {
-            width: 100%;
-            justify-content: space-between;
-        }
-
-        .navbar-custom .navbar-nav .nav-item {
-            margin-left: 10px;
         }
 
         .date-navigation {
@@ -185,37 +171,99 @@
             font-size: 1rem;
         }
 
+        #scrollToTopBtn {
+            display: none;
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            z-index: 1040;
+            font-size: 18px;
+            border: none;
+            outline: none;
+            background-color: #007bff;
+            color: white;
+            cursor: pointer;
+            padding: 12px 16px;
+            border-radius: 50%;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: opacity 0.3s ease-in-out;
+        }
+
+        #scrollToTopBtn:hover {
+            background-color: #0056b3;
+        }
+
+         .top-header {
+             background-color: white;
+             border-bottom: 1px solid #ddd;
+             position: fixed;
+             top: 0;
+             width: 100%;
+             z-index: 1030;
+         }
+
+        .top-header h1 {
+            font-size: 2rem;
+            font-weight: bold;
+            margin: 0;
+        }
+
+        .navbar-custom {
+            background-color: #f8f9fa;
+            border-bottom: 1px solid #ddd;
+            position: fixed;
+            top: 50px;
+            width: 100%;
+            z-index: 1020;
+        }
+
+        .navbar-custom .navbar-nav {
+            width: 100%;
+            justify-content: space-between;
+        }
+
+        .navbar-custom .navbar-nav .nav-item {
+            margin-left: 10px;
+        }
+
+
+        .container-main {
+            padding-top: 140px;
+        }
     </style>
 </head>
 <body>
-<nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top w-100">
-    <div class="container d-flex justify-content-between">
-        <a class="navbar-brand" href="{{ route('dashboard') }}">TipAndGo</a>
+<header class="top-header py-2 shadow-sm">
+    <div class="container d-flex justify-content-between align-items-center">
+        <a href="{{ route('dashboard') }}" class="text-dark text-decoration-none">
+            Dashboard
+        </a>
+        <a href="{{ route('matches.index') }}" class="text-dark text-decoration-none">
+            <h1 class="mb-0">TipAndGo</h1>
+        </a>
+        <div style="width: 80px;"></div>
+    </div>
+</header>
 
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+<nav class="navbar navbar-expand-lg navbar-light navbar-custom">
+    <div class="container d-flex justify-content-between align-items-center">
+
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
 
         <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav ml-auto d-flex align-items-center">
-                <li class="nav-item mr-3">
-                    <a class="nav-link" href="{{ route('matches.index') }}">Všechny zápasy</a>
-                </li>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="leagueDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Ligy
-                    </a>
-                    <div class="dropdown-menu" aria-labelledby="leagueDropdown">
-                        @foreach($leagues as $league)
-                            <a class="dropdown-item" href="{{ route('matches.index', ['league' => $league->id]) }}">{{ $league->name }}</a>
-                        @endforeach
-                    </div>
-                </li>
+            <ul class="navbar-nav">
+                @foreach($leagues as $league)
+                    <li class="nav-item mr-3">
+                        <a class="nav-link" href="{{ route('matches.index', ['league' => $league->id]) }}">{{ $league->name }}</a>
+                    </li>
+                @endforeach
             </ul>
         </div>
     </div>
 </nav>
-
 
 <div class="content-area">
     @yield('content')
@@ -231,8 +279,26 @@
         </div>
     </div>
 </footer>
+<button id="scrollToTopBtn" class="btn btn-primary" title="Zpět nahoru">
+    <i class="fas fa-arrow-up"></i>
+</button>
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script>
+    const scrollToTopBtn = document.getElementById("scrollToTopBtn");
+
+    window.onscroll = function () {
+        if (document.body.scrollTop > 300 || document.documentElement.scrollTop > 300) {
+            scrollToTopBtn.style.display = "block";
+        } else {
+            scrollToTopBtn.style.display = "none";
+        }
+    };
+
+    scrollToTopBtn.addEventListener("click", function () {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+</script>
 </body>
 </html>

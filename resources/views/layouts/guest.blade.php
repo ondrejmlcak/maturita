@@ -16,11 +16,18 @@
 <div class="min-h-screen flex flex-col sm:justify-center items-center pt-6 sm:pt-0">
     <div class="text-center">
         <h1 class="text-2xl font-bold text-gray-800">{{ config('app.name', 'Laravel') }}</h1>
-        <p class="text-sm text-gray-600 mt-1">Přihlas se nebo si vytvoř účet</p>
         <div class="mt-2 space-x-4">
-            <a href="{{ route('login') }}" class="text-blue-600 hover:underline">Přihlášení</a>
-            <a href="{{ route('register') }}" class="text-blue-600 hover:underline">Registrace</a>
+            @if (Route::currentRouteName() !== 'login')
+                <p class="text-sm text-gray-600 mt-1">Přihlas se zde</p>
+                <a href="{{ route('login') }}" class="text-blue-600 hover:underline">Přihlášení</a>
+            @endif
+
+            @if (Route::currentRouteName() !== 'register')
+                    <p class="text-sm text-gray-600 mt-1">Vytvoř si účet zde</p>
+                <a href="{{ route('register') }}" class="text-blue-600 hover:underline">Registrace</a>
+            @endif
         </div>
+
     </div>
 
     <div class="w-full sm:max-w-md mt-6 px-6 py-4 bg-gray-200 shadow-md overflow-hidden sm:rounded-lg">

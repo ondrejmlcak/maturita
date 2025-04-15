@@ -56,7 +56,7 @@
         <div class="col-md-4 text-center">
             <i class="bi bi-cash-stack" style="font-size: 3rem; color: #28a745;"></i>
             <h4 class="mt-3">Online vsázení</h4>
-            <p>Vsaďte si na své oblíbené týmy a hráče.</p>
+            <p>Vsaďte si na své oblíbené týmy.</p>
         </div>
     </div>
 </div>

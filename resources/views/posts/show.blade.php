@@ -29,11 +29,12 @@
         <img src="{{ asset('storage/' . $post->image) }}" alt="{{ $post->title }}" class="img-fluid post-image">
     @endif
 
+    <div class="post-content mt-3">
     <p>{{ $post->lead_paragraph }}</p>
 
 
     <p>{!! $post->description !!}</p>
-
+    </div>
     <h4>Tagy:</h4>
     <ul class="list-inline">
         @foreach($post->teams as $team)
