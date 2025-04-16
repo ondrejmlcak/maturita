@@ -203,9 +203,8 @@ Rozhodčí: ${referee}`;
                     <div class="mb-3">
                         <label for="event-team" class="form-label">Tým</label>
                         <select name="team_id" id="event-team" class="form-select" required>
-                            @foreach($teams as $team)
-                                <option value="{{ $team->id }}">{{ $team->name }}</option>
-                            @endforeach
+                            <option value="{{ $match->homeTeam->id }}">{{ $match->homeTeam->name }}</option>
+                            <option value="{{ $match->awayTeam->id }}">{{ $match->awayTeam->name }}</option>
                         </select>
                     </div>
                     <div class="mb-3">

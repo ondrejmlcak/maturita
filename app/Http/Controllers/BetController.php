@@ -11,38 +11,7 @@ use Illuminate\Support\Facades\Auth;
 
 class BetController extends Controller
 {
-    public function placeBet(Request $request)
-    {
-        $request->validate([
-            'match_id' => 'required|integer',
-            'bet_type' => 'required|string',
-            'odd' => 'required|numeric',
-            'amount' => 'required|numeric|min:1',
-        ]);
-
-        $user = Auth::user();
-        $matchId = $request->match_id;
-
-        if ($user->hasBetOnMatch($matchId)) {
-            return redirect()->back()->with('error', 'Na tento zápas jste již vsadili.');
-        }
-
-        if ($user->money < $request->amount) {
-            return redirect()->back()->with('error', 'Nemáte dostatek peněz na sázku.');
-        }
-
-        $user->money -= $request->amount;
-        $user->save();
-
-        Bet::create([
-            'user_id' => $user->id,
-            'match_id' => $matchId,
-            'bet_type' => $request->bet_type,
-            'odd' => $request->odd
-        ]);
-
-        return redirect()->back()->with('success', 'Sázka byla úspěšně podána.');
-    }
+    // pridame do tiketu
     public function addToTicket(Request $request)
     {
         $match = Utkani::where('match_id', $request->match_id)->first();
@@ -78,6 +47,7 @@ class BetController extends Controller
         return view('livematches.ticket', compact('ticket'));
     }
 
+    // ukaze vsechny uzivatelovy tikety
     public function allTickets()
     {
         $user = Auth::user();
@@ -90,6 +60,7 @@ class BetController extends Controller
         return view('livematches.all_tickets', compact('tickets'));
     }
 
+    // ulozime tiket do db
     public function placeTicket(Request $request)
     {
         $user = Auth::user();
@@ -129,6 +100,7 @@ class BetController extends Controller
         return redirect()->back()->with('success', 'Tiket byl úspěšně podán.');
     }
 
+    // odebere prilezitost z tiketu
     public function removeFromTicket($index)
     {
         $ticket = session()->get('ticket', []);

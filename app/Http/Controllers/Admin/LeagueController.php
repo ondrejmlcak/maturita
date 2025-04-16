@@ -19,6 +19,8 @@ class LeagueController extends Controller
         return view('admin.leagues.create');
     }
 
+    //Ulozi do databaze, musi mit unikatni jmeno
+
     public function store(Request $request)
     {
         $request->validate([
@@ -49,7 +51,7 @@ class LeagueController extends Controller
     public function update(Request $request, League $league)
     {
         $request->validate([
-            'name' => 'required|string|max:255|unique:leagues,name',
+            'name' => 'required|string|max:255',
         ]);
 
         $league->update($request->all());

@@ -6,6 +6,8 @@ use App\Services\FootballOddsService;
 use Illuminate\Console\Command;
 use App\Models\Utkani;
 
+//uklada zapasy do db za pomoci prikazu v artisanu, kdyz je zapas se stejnym jmenem a datem, jeden zapas se neposle
+// Kdyz je status zapasu ended, neposle se znovu do db.
 class StoreMatches extends Command
 {
     protected $signature = 'matches:store';

@@ -176,6 +176,15 @@
             background-color: #0056b3;
         }
 
+        .post-image {
+            width: 100%;
+            height: auto;
+            max-width: 100%;
+            display: block;
+            margin: 0 auto;
+        }
+
+
     </style>
 </head>
 <body>

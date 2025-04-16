@@ -15,6 +15,7 @@ class FootballOddsController extends Controller
         $this->oddsService = $oddsService;
     }
 
+    //zobrazeni vsech zapasu na jedne strance, co aktualne api nabizi
     public function liveMatches()
     {
         $matches = $this->oddsService->getLiveMatches();
@@ -27,6 +28,7 @@ class FootballOddsController extends Controller
         return view('livematches.live_matches', ['matches' => $sortedMatches]);
     }
 
+    //filtrace zapasu na dnesek
     public function liveMatchesToday()
     {
         $today = Carbon::today('Europe/Prague');

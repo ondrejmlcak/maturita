@@ -11,13 +11,15 @@ use App\Http\Controllers\Admin\LeagueController;
 use App\Http\Controllers\Admin\TeamController;
 use App\Http\Controllers\Admin\ZapasController;
 use App\Http\Controllers\Api\FootballOddsController;
+use App\Http\Controllers\Auth\PasswordResetLinkController;
+use App\Http\Controllers\Admin\TicketController;
+use App\Http\Controllers\Admin\UtkaniController;
+use App\Http\Controllers\PostPageController;
+
 
 Route::get('/', function () {
     return view('welcome');
 });
-
-use App\Http\Controllers\Admin\TicketController;
-use App\Http\Controllers\Admin\UtkaniController;
 
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'userDashboard'])->name('dashboard');
@@ -101,8 +103,6 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     Route::patch('profile/password', [ProfileController::class, 'updatePassword'])->name('profile.updatePassword');
 });
-
-use App\Http\Controllers\PostPageController;
 
 Route::middleware(['auth'])->group(function () {
     Route::get('/posts', [PostPageController::class, 'index'])->name('posts.index');

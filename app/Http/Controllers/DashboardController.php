@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 
 class DashboardController extends Controller
 {
+    //User uvidi sve 3 tikety
     public function userDashboard()
     {
         $latestTickets = Ticket::with('bets.match')
@@ -23,6 +24,7 @@ class DashboardController extends Controller
 
 
 
+    //Do adminu da 5 posledni postu a 4 posledni zapasy
     public function adminDashboard()
     {
         $latestPosts = Post::latest()->take(5)->get();

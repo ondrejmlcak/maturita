@@ -79,7 +79,7 @@ class TeamController extends Controller
     public function update(Request $request, Team $team)
     {
         $request->validate([
-            'name' => 'required|string|max:20|unique:teams,name',
+            'name' => 'required|string|max:20',
             'league_id' => 'required|exists:leagues,id',
             'image' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
         ]);

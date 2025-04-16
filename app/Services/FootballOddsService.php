@@ -20,6 +20,7 @@ class FootballOddsService
     }
 
 
+    //Ziskame vsechny zapasy live
     public function getLiveMatches()
     {
         try {
@@ -163,6 +164,7 @@ class FootballOddsService
                 return [];
             }
 
+            // povoli urcite prilezitosti
             $allowedBetTypes = [
                 'home', 'draw', 'away',
                 'total-goal-0', 'total-goal-1', 'total-goal-2', 'total-goal-3', 'total-goal-4', 'total-goal-5', 'total-goal-6',
@@ -174,6 +176,7 @@ class FootballOddsService
                 'under-0-5', 'under-1-5', 'under-2-5', 'under-3-5', 'under-4-5', 'under-5-5', 'under-6-5', 'under-7-5'
             ];
 
+            // prepise prilezitosti bez -
             $betTypeNames = [
                 'home' => 'Výhra domácích',
                 'draw' => 'Remíza',
@@ -255,6 +258,7 @@ class FootballOddsService
         }
     }
 
+    //Ziskame zapasy podle data
     public function getLiveMatchesByDate($date)
     {
         $matches = $this->getLiveMatches();

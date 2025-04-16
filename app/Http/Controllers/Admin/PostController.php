@@ -95,7 +95,7 @@ class PostController extends Controller
         $post = Post::findOrFail($id);
 
         $request->validate([
-            'title' => 'required|string|max:255|unique:posts,title',
+            'title' => 'required|string|max:255',
             'lead_paragraph' => 'nullable|string|max:500',
             'description' => 'required|string',
             'image' => 'nullable|image|max:2048',

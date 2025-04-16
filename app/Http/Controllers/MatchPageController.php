@@ -51,6 +51,7 @@ class MatchPageController extends Controller
     }
 
 
+    //ukaze zapasy podle data
     public function showByDate($date)
     {
         $currentDate = Carbon::parse($date)->toDateString();

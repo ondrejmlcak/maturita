@@ -35,6 +35,8 @@ class PostPageController extends Controller
         return view('posts.index', compact('posts', 'league', 'leagues'));
     }
 
+
+    //zobrazi clanky podle tymu (tagu)
     public function showByTeam($leagueSlug, $teamSlug)
     {
         $league = League::where('slug', $leagueSlug)->first();
@@ -63,6 +65,7 @@ class PostPageController extends Controller
         return view('posts.index', compact('posts', 'league', 'team', 'leagues'));
     }
 
+    //Za pomoci query vyhleda pozadavek od uzivatele
     public function search(Request $request)
     {
         $query = $request->input('query');

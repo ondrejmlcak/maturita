@@ -9,6 +9,7 @@
             <label>Status</label>
             <select name="status" class="form-control">
                 @php
+                // Přepiše si status do lepsiho provedeni
                     $statuses = [
                         "" => 'Ještě nezačalo',
                         "1st" => '1. poločas',
