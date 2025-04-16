@@ -17,18 +17,15 @@
     <div class="text-center">
         <h1 class="text-2xl font-bold text-gray-800">{{ config('app.name', 'Laravel') }}</h1>
         <div class="mt-2 space-x-4">
-            @if (Route::currentRouteName() !== 'verification.notice')
-                <div class="mt-2 space-x-4">
-                    @if (Route::currentRouteName() === 'register')
-                        <p class="text-sm text-gray-600 mt-1">Už máš účet?</p>
-                        <a href="{{ route('login') }}" class="text-blue-600 hover:underline">Přihlášení</a>
-                    @elseif (Route::currentRouteName() === 'login')
-                        <p class="text-sm text-gray-600 mt-1">Ještě nemáš účet?</p>
-                        <a href="{{ route('register') }}" class="text-blue-600 hover:underline">Registrace</a>
-                    @endif
-                </div>
+            @if (Route::currentRouteName() !== 'login')
+                <p class="text-sm text-gray-600 mt-1">Přihlas se zde</p>
+                <a href="{{ route('login') }}" class="text-blue-600 hover:underline">Přihlášení</a>
             @endif
 
+            @if (Route::currentRouteName() !== 'register')
+                    <p class="text-sm text-gray-600 mt-1">Vytvoř si účet zde</p>
+                <a href="{{ route('register') }}" class="text-blue-600 hover:underline">Registrace</a>
+            @endif
         </div>
 
     </div>
